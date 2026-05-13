@@ -49,4 +49,4 @@ This project is a web-based Smart Campus Management System developed using Djang
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/eylulkozak/Smart-Campus.git
+git clone https://github.com/sevvalnurozkaya-jpg/SmartCampusProject1
