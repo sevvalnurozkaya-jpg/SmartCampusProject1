@@ -1,0 +1,175 @@
+{% extends 'core/staff_base.html' %}
+
+{% block title %}Event Participants{% endblock %}
+{% block page_title %}Event Participants{% endblock %}
+
+{% block content %}
+
+<div class="panel-card">
+
+    <div class="breadcrumb">
+        <a href="{% url 'staff_event_management' %}">Event Management</a>
+        <span>/</span>
+        <span>{{ event.title }} Participants</span>
+    </div>
+
+    <div class="panel-header">
+        <div>
+            <h3>{{ event.title }}</h3>
+            <p>Participants who applied to this event.</p>
+        </div>
+
+        <span class="count-badge">
+            {{ participants|length }} Participant
+        </span>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Application Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for participant in participants %}
+            <tr>
+                <td>
+                    <strong>{{ participant.student.username }}</strong>
+                </td>
+
+                <td>
+                    {% if participant.student.email %}
+                        {{ participant.student.email }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+
+                <td>
+                    {{ participant.applied_at|date:"d M Y H:i" }}
+                </td>
+
+                <td>
+                    <span class="status-badge {{ participant.status|lower }}">
+                        {{ participant.status|title }}
+                    </span>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4" class="empty">
+                    No participants found for this event.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    .panel-card {
+        background: white;
+        padding: 28px;
+        border-radius: 22px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+    }
+
+    .breadcrumb {
+        margin-bottom: 22px;
+        color: #6b7280;
+        font-weight: 600;
+    }
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: #7c3aed;
+        font-weight: bold;
+    }
+
+    .breadcrumb span {
+        margin-left: 8px;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .panel-header h3 {
+        margin: 0;
+        color: #111827;
+        font-size: 26px;
+    }
+
+    .panel-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    .count-badge {
+        background: #ede9fe;
+        color: #6d28d9;
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        color: #6b7280;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 16px 0;
+        border-bottom: 1px solid #f1f1f1;
+        color: #374151;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: bold;
+        font-size: 13px;
+        background: #ede9fe;
+        color: #6d28d9;
+    }
+
+    .status-badge.approved {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    .status-badge.rejected {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .status-badge.pending {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .empty {
+        text-align: center;
+        color: #6b7280;
+        padding: 30px 0;
+    }
+</style>
+
+{% endblock %}

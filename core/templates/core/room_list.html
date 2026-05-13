@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 20px;">
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm" style="background: linear-gradient(45deg, {% if 'room' in request.path %}#3498db, #2980b9{% else %}#1abc9c, #16a085{% endif %}); color: white; border-radius: 15px; border: none;">
+                <div class="card-body p-4">
+                    <h2 class="m-0">
+                        <i class="fas {% if 'room' in request.path %}fa-book-reader{% else %}fa-running{% endif %} me-2"></i> 
+                        {% if 'room' in request.path %}Book a Study Room{% else %}Book a Sports Facility{% endif %}
+                    </h2>
+                    <p class="mb-0 opacity-75">Choose the best spot for your activities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm" style="border-radius: 15px; border: none;">
+        <div class="card-body p-4">
+            <form method="POST" action="{% if 'room' in request.path %}{% url 'make_room_reservation' %}{% else %}{% url 'make_reservation' 0 %}{% endif %}">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold text-secondary">
+                            {% if 'room' in request.path %}Select Study Room{% else %}Select Facility{% endif %}
+                        </label>
+                        <select name="room_choice" class="form-select form-select-lg" style="border-radius: 10px; border: 2px solid #eee;">
+                            
+                            {% if 'room' in request.path %}
+                                <optgroup label="Study Rooms (Capacity: 10)">
+                                    <option value="Room 1">Study Room 1</option>
+                                    <option value="Room 2">Study Room 2</option>
+                                    <option value="Room 3">Study Room 3</option>
+                                    <option value="Room 4">Study Room 4</option>
+                                    <option value="Room 5">Study Room 5</option>
+                                    <option value="Room 6">Study Room 6</option>
+                                    <option value="Room 7">Study Room 7</option>
+                                </optgroup>
+                            {% else %}
+                                <optgroup label="Sports Facilities">
+                                    <option value="Basketball Court">Basketball Court</option>
+                                    <option value="Football Pitch">Football Pitch</option>
+                                    <option value="Tennis Court">Tennis Court</option>
+                                    <option value="Swimming Pool">Swimming Pool</option>
+                                </optgroup>
+                            {% endif %}
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold text-secondary">Date</label>
+                        <input type="date" name="res_date" class="form-control form-control-lg" style="border-radius: 10px; border: 2px solid #eee;" required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold text-secondary">Time Slot</label>
+                        <input type="time" name="res_time" class="form-control form-control-lg" style="border-radius: 10px; border: 2px solid #eee;" required>
+                    </div>
+                </div>
+
+                <hr class="my-4" style="opacity: 0.1;">
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm" style="border-radius: 12px; font-weight: bold; padding: 15px;">
+                        <i class="fas fa-check-circle me-2"></i> Confirm Reservation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'booking_center' %}" class="text-decoration-none text-muted">
+            <i class="fas fa-chevron-left me-1"></i> Back to Categories
+        </a>
+    </div>
+</div>
+
+<style>
+    .form-select:focus, .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.1);
+    }
+    /* Renkleri dinamik yaptık: Odalar mavimsi, Spor yeşilimsi */
+    .btn-primary { 
+        background-color: {% if 'room' in request.path %}#3498db{% else %}#1abc9c{% endif %}; 
+        border: none; 
+    }
+    .btn-primary:hover { 
+        background-color: {% if 'room' in request.path %}#2980b9{% else %}#16a085{% endif %}; 
+        transform: translateY(-2px); 
+    }
+    .card { transition: all 0.3s ease; }
+</style>
+{% endblock %}

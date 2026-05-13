@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Campus{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            color: #333;
+        }
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: #1f2937;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #3b82f6;
+        }
+
+        .sidebar-header small {
+            color: #9ca3af;
+            display: block;
+            margin-top: 8px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .menu-label {
+            font-size: 12px;
+            color: #9ca3af;
+            margin: 20px 0 10px 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 6px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .nav-link:hover {
+            background: #2563eb;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout-container {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logout-btn {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            background: #dc2626;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c !important;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .full-content {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+{% if user.is_authenticated %}
+
+<div class="sidebar">
+
+    <div class="sidebar-header">
+        <h2>
+            <i class="fas fa-university"></i>
+            Smart Campus
+        </h2>
+
+        {% if user.role == 'staff' or user.role == 'Kulüp / Akademisyen' or user.is_staff %}
+            <small>STAFF PORTAL</small>
+        {% elif user.role == 'admin' or user.is_superuser %}
+            <small>ADMIN PORTAL</small>
+        {% else %}
+            <small>STUDENT PORTAL</small>
+        {% endif %}
+    </div>
+
+    <ul class="nav-links">
+
+        {% if user.role == 'staff' or user.role == 'Kulüp / Akademisyen' or user.is_staff %}
+
+            <div class="menu-label">Staff Menu</div>
+
+            <li class="nav-item">
+                <a href="{% url 'staff_dashboard' %}" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'create_event' %}" class="nav-link">
+                    <i class="fas fa-plus-circle"></i>
+                    Create Event
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'manage_applications' %}" class="nav-link">
+                    <i class="fas fa-file-alt"></i>
+                    Applications
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'manage_reservations' %}" class="nav-link">
+                    <i class="fas fa-ticket-alt"></i>
+                    Reservations
+                </a>
+            </li>
+
+        {% elif user.role == 'admin' or user.is_superuser %}
+
+            <div class="menu-label">Admin Menu</div>
+
+            <li class="nav-item">
+                <a href="{% url 'admin_dashboard' %}" class="nav-link">
+                    <i class="fas fa-user-shield"></i>
+                    Admin Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'admin_user_management' %}" class="nav-link">
+                    <i class="fas fa-users-cog"></i>
+                    User Management
+                </a>
+            </li>
+
+        {% else %}
+
+            <div class="menu-label">Student Menu</div>
+
+            <li class="nav-item">
+                <a href="{% url 'student_dashboard' %}" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'event_list' %}" class="nav-link">
+                    <i class="fas fa-calendar"></i>
+                    Events
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'club_list' %}" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    Clubs
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/my-applications/" class="nav-link">
+                    <i class="fas fa-check-circle"></i>
+                    My Applications
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'my_reservations' %}" class="nav-link">
+                    <i class="fas fa-bookmark"></i>
+                    My Reservations
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'announcements_list' %}" class="nav-link">
+                    <i class="fas fa-bullhorn"></i>
+                    Announcements
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'send_feedback' %}" class="nav-link">
+                    <i class="fas fa-comment-dots"></i>
+                    Feedback
+                </a>
+            </li>
+
+            <li class="nav-item">
+               <a href="/my-profile/" class="nav-link">
+                    <i class="fas fa-user-circle"></i>
+                    My Profile
+                </a>
+            </li>
+
+        {% endif %}
+
+    </ul>
+
+    <div class="logout-container">
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-link logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endif %}
+
+<div class="{% if user.is_authenticated %}main-content{% else %}full-content{% endif %}">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

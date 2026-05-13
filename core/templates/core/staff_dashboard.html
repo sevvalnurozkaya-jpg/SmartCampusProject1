@@ -1,0 +1,239 @@
+{% extends 'core/staff_base.html' %}
+
+{% block title %}Staff Dashboard{% endblock %}
+{% block page_title %}Staff Management Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="stats-grid">
+
+    <div class="stat-card purple">
+        <div>
+            <p>Pending Applications</p>
+            <h2>{{ pending_apps }}</h2>
+        </div>
+        <i class="fas fa-file-signature"></i>
+    </div>
+
+    <div class="stat-card blue">
+        <div>
+            <p>Total Events</p>
+            <h2>{{ total_events }}</h2>
+        </div>
+        <i class="fas fa-calendar-check"></i>
+    </div>
+
+    <div class="stat-card green">
+        <div>
+            <p>Reservations</p>
+            <h2>{{ pending_res }}</h2>
+        </div>
+        <i class="fas fa-ticket-alt"></i>
+    </div>
+
+    <div class="stat-card orange">
+        <div>
+            <p>Staff Account</p>
+            <h2>{{ username }}</h2>
+        </div>
+        <i class="fas fa-user-tie"></i>
+    </div>
+
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="panel-card">
+        <div class="panel-header">
+            <h3>Recent Events</h3>
+            <a href="{% url 'staff_event_management' %}">View All</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.date|date:"d M Y" }}</td>
+                    <td>
+                        <span class="status-badge">{{ event.status }}</span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No events found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel-card">
+        <h3>Quick Actions</h3>
+
+        <a href="{% url 'create_event' %}" class="quick-btn">
+            <i class="fas fa-plus-circle"></i>
+            Create New Event
+        </a>
+
+        <a href="{% url 'manage_applications' %}" class="quick-btn">
+            <i class="fas fa-file-signature"></i>
+            Review Applications
+        </a>
+
+        <a href="{% url 'manage_reservations' %}" class="quick-btn">
+            <i class="fas fa-ticket-alt"></i>
+            Manage Reservations
+        </a>
+
+        <a href="{% url 'manage_announcements' %}" class="quick-btn">
+            <i class="fas fa-bullhorn"></i>
+            Manage Announcements
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 26px;
+        border-radius: 22px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-left: 6px solid #7c3aed;
+    }
+
+    .stat-card p {
+        margin: 0;
+        color: #6b7280;
+        font-weight: 600;
+    }
+
+    .stat-card h2 {
+        margin: 8px 0 0;
+        font-size: 30px;
+        color: #111827;
+    }
+
+    .stat-card i {
+        font-size: 32px;
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .purple i { color: #7c3aed; background: #ede9fe; }
+    .blue i { color: #2563eb; background: #dbeafe; }
+    .green i { color: #059669; background: #d1fae5; }
+    .orange i { color: #f59e0b; background: #fef3c7; }
+
+    .blue { border-left-color: #2563eb; }
+    .green { border-left-color: #059669; }
+    .orange { border-left-color: #f59e0b; }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    .panel-card {
+        background: white;
+        padding: 28px;
+        border-radius: 22px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .panel-header h3,
+    .panel-card h3 {
+        margin: 0 0 18px;
+        color: #111827;
+    }
+
+    .panel-header a {
+        text-decoration: none;
+        color: #7c3aed;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        color: #6b7280;
+        font-size: 14px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+        padding: 15px 0;
+        border-bottom: 1px solid #f1f1f1;
+        color: #374151;
+    }
+
+    .status-badge {
+        background: #ede9fe;
+        color: #6d28d9;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .quick-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        background: #f4f6fb;
+        color: #111827;
+        padding: 15px;
+        border-radius: 14px;
+        margin-bottom: 12px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .quick-btn:hover {
+        background: #7c3aed;
+        color: white;
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+{% endblock %}

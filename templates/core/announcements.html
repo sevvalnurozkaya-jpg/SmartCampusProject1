@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Announcements{% endblock %}
+{% block page_title %}Campus Announcements{% endblock %}
+
+{% block content %}
+
+<div class="announcement-wrapper">
+
+    <div class="announcement-header">
+        <h2>
+            <i class="fas fa-bullhorn"></i>
+            Campus Announcements
+        </h2>
+        <p>Latest updates and important campus news.</p>
+    </div>
+
+    <div class="announcement-list">
+
+        {% for announcement in announcements %}
+
+        <div class="announcement-card">
+
+            <div class="announcement-top">
+                <h3>{{ announcement.title }}</h3>
+
+                <div class="announcement-date">
+                    <i class="far fa-clock"></i>
+                    {{ announcement.created_at|date:"d M Y" }}
+                </div>
+            </div>
+
+            <div class="announcement-content">
+                {{ announcement.content|linebreaks }}
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-box">
+            <i class="fas fa-comment-slash"></i>
+            <p>No active announcements at the moment.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<style>
+
+    .announcement-wrapper{
+        display:flex;
+        flex-direction:column;
+        gap:24px;
+    }
+
+    .announcement-header{
+        background:white;
+        border-radius:22px;
+        padding:28px;
+        box-shadow:0 5px 18px rgba(0,0,0,0.06);
+    }
+
+    .announcement-header h2{
+        margin:0;
+        font-size:36px;
+        font-weight:800;
+        color:#111827;
+        display:flex;
+        align-items:center;
+        gap:14px;
+    }
+
+    .announcement-header h2 i{
+        color:#2563eb;
+    }
+
+    .announcement-header p{
+        margin-top:10px;
+        color:#6b7280;
+        font-size:15px;
+    }
+
+    .announcement-list{
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .announcement-card{
+        background:white;
+        border-radius:20px;
+        padding:26px;
+        border-left:6px solid #2563eb;
+        box-shadow:0 5px 18px rgba(0,0,0,0.06);
+        transition:0.3s;
+    }
+
+    .announcement-card:hover{
+        transform:translateY(-3px);
+    }
+
+    .announcement-top{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:18px;
+        gap:20px;
+    }
+
+    .announcement-top h3{
+        margin:0;
+        color:#111827;
+        font-size:24px;
+        font-weight:700;
+    }
+
+    .announcement-date{
+        background:#f3f4f6;
+        padding:8px 14px;
+        border-radius:999px;
+        color:#6b7280;
+        font-size:14px;
+        font-weight:600;
+        display:flex;
+        align-items:center;
+        gap:8px;
+        white-space:nowrap;
+    }
+
+    .announcement-content{
+        color:#374151;
+        line-height:1.8;
+        font-size:16px;
+    }
+
+    .empty-box{
+        background:white;
+        border-radius:20px;
+        padding:60px 20px;
+        text-align:center;
+        box-shadow:0 5px 18px rgba(0,0,0,0.06);
+    }
+
+    .empty-box i{
+        font-size:52px;
+        color:#9ca3af;
+        margin-bottom:18px;
+    }
+
+    .empty-box p{
+        color:#6b7280;
+        margin:0;
+        font-size:17px;
+    }
+
+</style>
+
+{% endblock %}

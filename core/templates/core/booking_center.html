@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus Booking Center</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 10px 18px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title {
+            color: #2c3e50;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+        }
+
+        .card p {
+            color: #666;
+            min-height: 45px;
+        }
+
+        .icon-blue { color: #3498db; }
+        .icon-green { color: #2ecc71; }
+        .icon-orange { color: #f39c12; }
+
+        .fake-btn {
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-blue { background-color: #3498db; }
+        .btn-green { background-color: #2ecc71; }
+        .btn-orange { background-color: #f39c12; }
+    </style>
+</head>
+
+<body>
+
+    <a href="{% url 'student_dashboard' %}" class="back-btn">← Back</a>
+
+    <div class="page-header">
+        <h1 class="page-title">Campus Booking Center</h1>
+        <p>Select the category you want to reserve for your activities.</p>
+    </div>
+
+    <div class="booking-grid">
+
+        <a href="{% url 'field_list' %}" class="card-link">
+            <div class="card">
+                <i class="fas fa-book-reader fa-3x icon-blue"></i>
+                <h3>Study Rooms</h3>
+                <p>7 individual rooms available. Capacity: 10 people per room.</p>
+                <div class="fake-btn btn-blue">Select a Room</div>
+            </div>
+        </a>
+
+        <a href="{% url 'field_list' %}" class="card-link">
+            <div class="card">
+                <i class="fas fa-running fa-3x icon-green"></i>
+                <h3>Sports Facilities</h3>
+                <p>Basketball, Football, Tennis Court, and Fitness Room.</p>
+                <div class="fake-btn btn-green">Book a Facility</div>
+            </div>
+        </a>
+
+        <a href="{% url 'field_list' %}" class="card-link">
+            <div class="card">
+                <i class="fas fa-dumbbell fa-3x icon-orange"></i>
+                <h3>Sport Equipment</h3>
+                <p>Football Ball, Basketball Ball, Volleyball Ball, Rackets, and more.</p>
+                <div class="fake-btn btn-orange">Rent Equipment</div>
+            </div>
+        </a>
+
+    </div>
+
+</body>
+</html>

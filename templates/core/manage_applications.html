@@ -1,0 +1,177 @@
+{% extends 'core/staff_base.html' %}
+
+{% block title %}Applications{% endblock %}
+{% block page_title %}Student Applications{% endblock %}
+
+{% block content %}
+
+<div class="panel-card">
+
+    <div class="panel-header">
+        <div>
+            <h3>Event Applications</h3>
+            <p>Review students who applied to campus events.</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Event</th>
+                <th>Application Date</th>
+                <th>Status</th>
+                <th class="action-col">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for app in apps %}
+            <tr>
+                <td>
+                    <strong>{{ app.student.username }}</strong>
+                </td>
+
+                <td>{{ app.event.title }}</td>
+
+                <td>
+                    {{ app.applied_at|date:"d M Y" }}
+                </td>
+
+                <td>
+                    <span class="status-badge {{ app.status|lower }}">
+                        {{ app.status|title }}
+                    </span>
+                </td>
+
+                <td class="action-col">
+                    <a href="{% url 'update_application_status' app.id 'approved' %}" class="approve-btn">
+                        Approve
+                    </a>
+
+                    <a href="{% url 'update_application_status' app.id 'rejected' %}" class="reject-btn">
+                        Reject
+                    </a>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty">
+                    No applications found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    .panel-card {
+        background: white;
+        padding: 28px;
+        border-radius: 22px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+    }
+
+    .panel-header {
+        margin-bottom: 25px;
+    }
+
+    .panel-header h3 {
+        margin: 0;
+        color: #111827;
+        font-size: 24px;
+    }
+
+    .panel-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        color: #6b7280;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 16px 0;
+        border-bottom: 1px solid #f1f1f1;
+        color: #374151;
+    }
+
+    .action-col {
+        text-align: right;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: bold;
+        font-size: 13px;
+        background: #ede9fe;
+        color: #6d28d9;
+    }
+
+    .status-badge.approved {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    .status-badge.rejected {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .status-badge.pending {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .approve-btn,
+    .reject-btn {
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        margin-left: 6px;
+    }
+
+    .approve-btn {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    .approve-btn:hover {
+        background: #059669;
+        color: white;
+    }
+
+    .reject-btn {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .reject-btn:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+    .empty {
+        text-align: center;
+        color: #6b7280;
+        padding: 30px 0;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Campus Login</title>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            background:#f4f7f6;
+        }
+
+        .main-container{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            flex-direction:column;
+            padding:20px;
+        }
+
+        .logo-box{
+            margin-bottom:30px;
+        }
+
+        .logo-box img{
+            width:220px;
+        }
+
+        .selection-card,
+        .login-card{
+            background:white;
+            padding:35px;
+            border-radius:18px;
+            box-shadow:0 5px 18px rgba(0,0,0,0.1);
+            width:500px;
+            text-align:center;
+        }
+
+        .selection-card{
+            margin-bottom:25px;
+        }
+
+        .selection-title{
+            margin-bottom:25px;
+            color:#2c3e50;
+            font-weight:bold;
+        }
+
+        .button-group{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+
+        .type-btn{
+            border:none;
+            padding:12px 18px;
+            border-radius:10px;
+            background:#ecf0f1;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .type-btn:hover{
+            background:#dfe6e9;
+        }
+
+        .login-card{
+            display:none;
+        }
+
+        .login-title{
+            text-align:center;
+            color:#2c3e50;
+            margin-bottom:25px;
+        }
+
+        .form-group{
+            margin-bottom:20px;
+            text-align:left;
+        }
+
+        .form-group label{
+            font-weight:bold;
+        }
+
+        .form-group input{
+            width:100%;
+            padding:12px;
+            border-radius:10px;
+            border:1px solid #ccc;
+            margin-top:8px;
+            box-sizing:border-box;
+        }
+
+        .login-buttons{
+            display:flex;
+            gap:15px;
+        }
+
+        .login-btn{
+            flex:1;
+            border:none;
+            background:#3498db;
+            color:white;
+            padding:12px;
+            border-radius:10px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .back-btn{
+            flex:1;
+            border:none;
+            background:#ecf0f1;
+            padding:12px;
+            border-radius:10px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+    <div class="logo-box">
+        <img src="https://it.yeditepe.edu.tr/sites/default/files/yeditepe_logo_v2.png"
+             alt="Logo">
+    </div>
+
+    <div class="selection-card">
+
+        <h3 class="selection-title">
+            Choose Your Portal
+        </h3>
+
+        <div class="button-group">
+
+            <button type="button"
+                    onclick="showLogin('staff')"
+                    class="type-btn">
+                👨‍🏫 Yeditepe Staff
+            </button>
+
+            <button type="button"
+                    onclick="showLogin('student')"
+                    class="type-btn">
+                🎓 Students
+            </button>
+
+            <button type="button"
+                    onclick="showLogin('admin')"
+                    class="type-btn">
+                🛡️ Admin Panel
+            </button>
+
+        </div>
+    </div>
+
+    <div id="loginFormBox" class="login-card">
+
+        <h3 id="loginTitle" class="login-title"></h3>
+
+        <form method="POST" action="{% url 'login' %}">
+
+            {% csrf_token %}
+
+            <input type="hidden"
+                   name="next"
+                   id="nextField"
+                   value="/dashboard/">
+
+            <div class="form-group">
+                <label>Username</label>
+
+                <input type="text"
+                       name="username"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+
+                <input type="password"
+                       name="password"
+                       required>
+            </div>
+
+            <div class="login-buttons">
+
+                <button type="submit" class="login-btn">
+                    Giriş Yap
+                </button>
+
+                <button type="button"
+                        onclick="hideLogin()"
+                        class="back-btn">
+                    Geri Dön
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+function showLogin(type){
+
+    const formBox = document.getElementById("loginFormBox");
+    const nextField = document.getElementById("nextField");
+    const title = document.getElementById("loginTitle");
+
+    formBox.style.display = "block";
+
+    if(type === "staff"){
+        nextField.value = "/staff-portal/";
+        title.innerText = "Staff Login";
+    }
+
+    else if(type === "student"){
+        nextField.value = "/dashboard/student/";
+        title.innerText = "Student Login";
+    }
+
+    else if(type === "admin"){
+        nextField.value = "/admin-panel/";
+        title.innerText = "Admin Login";
+    }
+}
+
+function hideLogin(){
+    document.getElementById("loginFormBox").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Applications</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 10px 18px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+        }
+
+        .app-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .empty {
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="{% url 'student_dashboard' %}" class="back-btn">← Back</a>
+
+<div class="container">
+    <h1>My Applications</h1>
+
+    {% if apps %}
+        {% for app in apps %}
+            <div class="app-card">
+                <p><strong>Event:</strong> {{ app.event.title }}</p>
+                <p><strong>Date:</strong> {{ app.event.date }}</p>
+                <p><strong>Location:</strong> {{ app.event.location }}</p>
+                <p><strong>Status:</strong> {{ app.status }}</p>
+                <p><strong>Applied By:</strong> {{ app.student.username }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty">You have not applied to any events yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

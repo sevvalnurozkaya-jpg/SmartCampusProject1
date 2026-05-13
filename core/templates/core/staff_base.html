@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Staff Portal{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fb;
+            color: #2c3e50;
+        }
+
+        .staff-sidebar {
+            width: 270px;
+            height: 100vh;
+            background: linear-gradient(180deg, #111827, #1f2937);
+            position: fixed;
+            left: 0;
+            top: 0;
+            color: white;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .staff-logo {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            margin-bottom: 25px;
+        }
+
+        .staff-logo h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #a78bfa;
+        }
+
+        .staff-logo small {
+            display: block;
+            margin-top: 8px;
+            color: #cbd5e1;
+            letter-spacing: 1px;
+        }
+
+        .menu-title {
+            font-size: 12px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 18px 0 8px 10px;
+        }
+
+        .staff-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .staff-nav li {
+            margin-bottom: 8px;
+        }
+
+        .staff-nav a,
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e5e7eb;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 12px;
+            transition: 0.3s;
+            font-size: 15px;
+            border: none;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .staff-nav a:hover {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .staff-nav i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout-area {
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 18px;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
+
+        .staff-content {
+            margin-left: 270px;
+            min-height: 100vh;
+            padding: 35px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 18px 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h3 { margin: 0; }
+
+        .welcome {
+            color: #6b7280;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="staff-sidebar">
+
+    <div class="staff-logo">
+        <h2><i class="fas fa-user-tie"></i> Smart Campus</h2>
+        <small>STAFF PORTAL</small>
+    </div>
+
+    <ul class="staff-nav">
+
+        <div class="menu-title">Management</div>
+
+        <li>
+            <a href="{% url 'staff_dashboard' %}">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff_event_management' %}">
+                <i class="fas fa-calendar-check"></i>
+                Event Management
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'create_event' %}">
+                <i class="fas fa-plus-circle"></i>
+                Create Event
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_applications' %}">
+                <i class="fas fa-file-signature"></i>
+                Applications
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'manage_reservations' %}">
+                <i class="fas fa-ticket-alt"></i>
+                Reservations
+            </a>
+        </li>
+
+        <div class="menu-title">Communication</div>
+
+        <li>
+            <a href="{% url 'manage_announcements' %}">
+                <i class="fas fa-bullhorn"></i>
+                Announcements
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'staff_reports' %}">
+                <i class="fas fa-chart-pie"></i>
+                Reports / Analytics
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="logout-area">
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<div class="staff-content">
+
+    <div class="topbar">
+        <h3>{% block page_title %}Staff Dashboard{% endblock %}</h3>
+        <div class="welcome">Welcome, {{ user.username }}</div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

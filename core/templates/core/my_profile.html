@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .profile-card {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            margin: 0 auto 15px auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .info-row {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #2c3e50;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 10px 18px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="{% url 'student_dashboard' %}" class="back-btn">← Back</a>
+
+    <div class="profile-card">
+
+        <div class="profile-header">
+            <div class="avatar">
+                {{ user.username|first|upper }}
+            </div>
+
+            <h1>{{ user.username }}</h1>
+            <p>Smart Campus User Profile</p>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Username</span>
+            <span class="value">{{ user.username }}</span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Email</span>
+            <span class="value">
+                {% if user.email %}
+                    {{ user.email }}
+                {% else %}
+                    Not added
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Role</span>
+            <span class="value">
+                {% if user.role %}
+                    {{ user.role }}
+                {% else %}
+                    Student
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Status</span>
+            <span class="value">Active</span>
+        </div>
+
+    </div>
+
+</body>
+</html>

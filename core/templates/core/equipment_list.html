@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 20px;">
+    
+    <div class="mb-4">
+        <a href="{% url 'booking_center' %}" class="btn btn-link text-decoration-none p-0" style="color: #6c757d; font-weight: 500;">
+            <i class="fas fa-chevron-left me-2"></i> Previous Page (Booking Center)
+        </a>
+    </div>
+
+    <div class="page-header mb-4">
+        <h2 class="fw-bold" style="color: #2c3e50;">Equipment Rental</h2>
+        <p class="text-muted">Borrow technical gear or sports equipment for your sessions.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-body p-0">
+                    
+                    <div class="p-4 border-bottom bg-light">
+                        <h5 class="m-0 fw-bold"><i class="fas fa-camera me-2 text-primary"></i> Technical Gear</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-4">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Professional Camera</h6>
+                                <small class="text-muted">DSLR with 18-55mm lens</small>
+                            </div>
+                            <a href="{% url 'rent_equipment' 'Professional Camera' %}" class="btn btn-primary px-4" style="border-radius: 8px;">Rent</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-4">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Wireless Microphone</h6>
+                                <small class="text-muted">Lavalier set for interviews</small>
+                            </div>
+                            <a href="{% url 'rent_equipment' 'Wireless Microphone' %}" class="btn btn-primary px-4" style="border-radius: 8px;">Rent</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-4">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Bluetooth Speaker</h6>
+                                <small class="text-muted">High-quality portable sound</small>
+                            </div>
+                            <a href="{% url 'rent_equipment' 'Bluetooth Speaker' %}" class="btn btn-primary px-4" style="border-radius: 8px;">Rent</a>
+                        </li>
+                    </ul>
+
+                    <div class="p-4 border-bottom bg-light mt-2">
+                        <h5 class="m-0 fw-bold"><i class="fas fa-volleyball-ball me-2 text-success"></i> Sports Equipment</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-4">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Basketball / Football Kit</h6>
+                                <small class="text-muted">Ball and team bibs included</small>
+                            </div>
+                            <a href="{% url 'rent_equipment' 'Sports Kit' %}" class="btn btn-success px-4" style="border-radius: 8px;">Rent</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-4">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Tennis Racket & Balls</h6>
+                                <small class="text-muted">Pair of rackets and 3 balls</small>
+                            </div>
+                            <a href="{% url 'rent_equipment' 'Tennis Set' %}" class="btn btn-success px-4" style="border-radius: 8px;">Rent</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hover efektleri ile daha canlı bir görünüm */
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+        transition: 0.3s;
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+</style>
+{% endblock %}

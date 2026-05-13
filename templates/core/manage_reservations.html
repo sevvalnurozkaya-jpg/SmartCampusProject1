@@ -1,0 +1,115 @@
+{% extends 'core/staff_base.html' %}
+
+{% block title %}Reservations{% endblock %}
+{% block page_title %}Reservation Management{% endblock %}
+
+{% block content %}
+
+<div class="panel-card">
+
+    <div class="panel-header">
+        <div>
+            <h3>All Reservations</h3>
+            <p>View study room, sports facility, and equipment reservations.</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Facility / Item</th>
+                <th>Date</th>
+                <th>Time Slot</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>
+                    <strong>{{ reservation.student.username }}</strong>
+                </td>
+
+                <td>{{ reservation.field.name }}</td>
+
+                <td>{{ reservation.date|date:"d M Y" }}</td>
+
+                <td>
+                    <span class="time-badge">
+                        {{ reservation.time_slot }}
+                    </span>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4" class="empty">
+                    No reservations found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    .panel-card {
+        background: white;
+        padding: 28px;
+        border-radius: 22px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+    }
+
+    .panel-header {
+        margin-bottom: 25px;
+    }
+
+    .panel-header h3 {
+        margin: 0;
+        color: #111827;
+        font-size: 24px;
+    }
+
+    .panel-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        color: #6b7280;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 16px 0;
+        border-bottom: 1px solid #f1f1f1;
+        color: #374151;
+    }
+
+    .time-badge {
+        background: #ede9fe;
+        color: #6d28d9;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .empty {
+        text-align: center;
+        color: #6b7280;
+        padding: 30px 0;
+    }
+</style>
+
+{% endblock %}
